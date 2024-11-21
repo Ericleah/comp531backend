@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="backend tests" tests="8" failures="0" errors="0" time="7.864">
+  <testsuite name="Backend Unit Tests" errors="0" failures="0" skipped="0" timestamp="2024-11-20T07:56:21" time="7.736" tests="8">
+    <testcase classname="Backend Unit Tests Authentication Tests should validate POST /register" name="Backend Unit Tests Authentication Tests should validate POST /register" time="1.331">
+    </testcase>
+    <testcase classname="Backend Unit Tests Authentication Tests should validate POST /login" name="Backend Unit Tests Authentication Tests should validate POST /login" time="0.373">
+    </testcase>
+    <testcase classname="Backend Unit Tests Authenticated Tests should validate GET /headline" name="Backend Unit Tests Authenticated Tests should validate GET /headline" time="0.747">
+    </testcase>
+    <testcase classname="Backend Unit Tests Authenticated Tests should validate PUT /headline" name="Backend Unit Tests Authenticated Tests should validate PUT /headline" time="0.745">
+    </testcase>
+    <testcase classname="Backend Unit Tests Authenticated Tests should validate GET /articles" name="Backend Unit Tests Authenticated Tests should validate GET /articles" time="0.645">
+    </testcase>
+    <testcase classname="Backend Unit Tests Authenticated Tests should validate POST /article" name="Backend Unit Tests Authenticated Tests should validate POST /article" time="0.751">
+    </testcase>
+    <testcase classname="Backend Unit Tests Authenticated Tests should validate GET /articles/:id" name="Backend Unit Tests Authenticated Tests should validate GET /articles/:id" time="0.715">
+    </testcase>
+    <testcase classname="Backend Unit Tests Authenticated Tests should validate PUT /logout" name="Backend Unit Tests Authenticated Tests should validate PUT /logout" time="0.595">
+    </testcase>
+  </testsuite>
+</testsuites>

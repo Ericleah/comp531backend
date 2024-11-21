@@ -1,0 +1,55 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest",
+    "test:junit": "jest --reporters=default --reporters=jest-junit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "basic-auth": "^2.0.1",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "cloudinary": "^2.5.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "es6-promise": "^4.2.8",
+    "express": "^4.21.1",
+    "express-session": "^1.17.3",
+    "isomorphic-fetch": "^3.0.0",
+    "md5": "^2.3.0",
+    "mongoose": "^7.6.3",
+    "mongoose-sequence": "^5.3.1",
+    "multer": "^1.4.5-lts.1",
+    "redis": "^4.6.10"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "jasmine": "^5.4.0",
+    "jasmine-node": "^3.0.0",
+    "jasmine-reporters": "^2.5.2",
+    "jest": "^29.7.0",
+    "jest-junit": "^16.0.0",
+    "supertest": "^6.3.4"
+  },
+  "jest": {
+    "reporters": [
+      "default",
+      [
+        "jest-junit",
+        {
+          "suiteName": "backend tests",
+          "outputDirectory": "test_reports",
+          "outputName": "junit.xml"
+        }
+      ]
+    ],
+    "globalSetup": "./spec/testSetup.js"
+  }
+}
