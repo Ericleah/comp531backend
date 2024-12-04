@@ -14,7 +14,6 @@ async function findAuthorIdByUsername(authorUsername) {
   }
 }
 
-// Create a new article
 async function createArticle(req, res) {
   const { text } = req.body;
   const loggedInUser = req.session.user.username;
@@ -53,7 +52,50 @@ async function createArticle(req, res) {
   }
 }
 
-// Get articles by ID or username
+/**
+ * @swagger
+ * /articles/{id}:
+ *   get:
+ *     summary: Get articles by ID or username
+ *     description: Fetch articles by their ID, username, or all articles if no parameter is provided.
+ *     security:
+ *       - cookieAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: false
+ *         schema:
+ *           type: string
+ *         description: ID of the article or username.
+ *     responses:
+ *       200:
+ *         description: Articles fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 articles:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                       author:
+ *                         type: string
+ *                       text:
+ *                         type: string
+ *                       comments:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                       date:
+ *                         type: string
+ *                         format: date-time
+ *       500:
+ *         description: Internal server error
+ */
 async function getArticles(req, res) {
   const identifier = req.params.id;
   const loggedInUser = req.session.user.username;
@@ -84,7 +126,52 @@ async function getArticles(req, res) {
   }
 }
 
-// Update article or its comments
+/**
+ * @swagger
+ * /articles/{id}:
+ *   put:
+ *     summary: Update an article or its comments
+ *     description: Update an article's text or add/edit a comment.
+ *     security:
+ *       - cookieAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the article to be updated.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               commentId:
+ *                 type: integer
+ *                 description: ID of the comment (-1 to add a new comment).
+ *               text:
+ *                 type: string
+ *                 description: The updated text or comment.
+ *             required:
+ *               - text
+ *     responses:
+ *       200:
+ *         description: Update successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *       400:
+ *         description: Missing required fields
+ *       403:
+ *         description: Forbidden
+ *       404:
+ *         description: Article or comment not found
+ *       500:
+ *         description: Internal server error
+ */
 async function updateArticle(req, res) {
   const { commentId, text } = req.body;
   const articleId = req.params.id;

@@ -15,7 +15,43 @@ function isLoggedIn(req, res, next) {
 }
 
 /**
- * POST /login: Authenticate user and set session.
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: Authenticate user and set session
+ *     description: Verify username and password, and establish a session for the user.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             required:
+ *               - username
+ *               - password
+ *     responses:
+ *       200:
+ *         description: Authentication successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 username:
+ *                   type: string
+ *                 result:
+ *                   type: string
+ *       400:
+ *         description: Missing username or password
+ *       401:
+ *         description: Invalid username or password
+ *       500:
+ *         description: Internal server error
  */
 async function login(req, res) {
   const { username, password } = req.body;
@@ -33,13 +69,6 @@ async function login(req, res) {
     const match = await bcrypt.compare(password, user.password);
     if (match) {
       req.session.user = { username: user.username, _id: user._id };
-
-      // // Set httpOnly cookie for the session ID
-      // res.cookie("connect.sid", req.session.id, {
-      //   httpOnly: true,
-      //   secure: process.env.NODE_ENV === "production", // Use secure cookies in production
-      // });
-
       res.send({ username: user.username, result: "success" });
     } else {
       res.status(401).send({ error: "Invalid password" });
@@ -51,7 +80,53 @@ async function login(req, res) {
 }
 
 /**
- * POST /register: Create a new user and profile with hashed password.
+ * @swagger
+ * /register:
+ *   post:
+ *     summary: Create a new user and profile with hashed password
+ *     description: Register a new user, hash their password, and store user and profile information.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               dob:
+ *                 type: string
+ *               phone:
+ *                 type: string
+ *               zipcode:
+ *                 type: string
+ *             required:
+ *               - username
+ *               - password
+ *               - email
+ *               - dob
+ *               - phone
+ *               - zipcode
+ *     responses:
+ *       200:
+ *         description: Registration successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 username:
+ *                   type: string
+ *                 result:
+ *                   type: string
+ *       400:
+ *         description: Missing required fields or username already exists
+ *       500:
+ *         description: Internal server error
  */
 async function register(req, res) {
   const { username, password, email, dob, phone, zipcode } = req.body;
@@ -95,7 +170,25 @@ async function register(req, res) {
 }
 
 /**
- * PUT /logout: Log out the user by clearing the session.
+ * @swagger
+ * /logout:
+ *   put:
+ *     summary: Log out the user by clearing the session
+ *     description: Destroy the user's session and clear the session cookie.
+ *     responses:
+ *       200:
+ *         description: Logout successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 result:
+ *                   type: string
+ *       401:
+ *         description: User is not logged in
+ *       500:
+ *         description: Internal server error
  */
 function logout(req, res) {
   if (req.session.user) {

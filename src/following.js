@@ -1,7 +1,40 @@
 const User = require("./model/UserSchema");
 const { isLoggedIn } = require("./auth");
 
-// Fetch the list of users a user is following
+/**
+ * @swagger
+ * /following/{user}:
+ *   get:
+ *     summary: Fetch the list of users a user is following
+ *     description: Retrieve the list of usernames the specified user is following. If no username is provided, retrieve the list for the logged-in user.
+ *     parameters:
+ *       - name: user
+ *         in: path
+ *         required: false
+ *         schema:
+ *           type: string
+ *         description: The username of the user
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the following list
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 username:
+ *                   type: string
+ *                 following:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
 async function getFollowing(req, res) {
   const username = req.params.user || req.session.user.username;
 
@@ -20,7 +53,42 @@ async function getFollowing(req, res) {
   }
 }
 
-// Add a user to the following list
+/**
+ * @swagger
+ * /following/{user}:
+ *   put:
+ *     summary: Add a user to the following list
+ *     description: Add the specified user to the logged-in user's following list.
+ *     parameters:
+ *       - name: user
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The username of the user to follow
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       200:
+ *         description: User successfully added to the following list
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 username:
+ *                   type: string
+ *                 following:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *       400:
+ *         description: Username to follow is required
+ *       404:
+ *         description: User to follow not found
+ *       500:
+ *         description: Internal server error
+ */
 async function addToFollowing(req, res) {
   const usernameToFollow = req.params.user;
   const loggedInUser = req.session.user;
@@ -57,7 +125,42 @@ async function addToFollowing(req, res) {
   }
 }
 
-// Remove a user from the following list
+/**
+ * @swagger
+ * /following/{user}:
+ *   delete:
+ *     summary: Remove a user from the following list
+ *     description: Remove the specified user from the logged-in user's following list.
+ *     parameters:
+ *       - name: user
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The username of the user to unfollow
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       200:
+ *         description: User successfully removed from the following list
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 username:
+ *                   type: string
+ *                 following:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *       400:
+ *         description: Username to unfollow is required
+ *       404:
+ *         description: User to unfollow not found
+ *       500:
+ *         description: Internal server error
+ */
 async function removeFromFollowing(req, res) {
   const loggedInUserId = req.session.user._id;
   const usernameToUnfollow = req.params.user;
