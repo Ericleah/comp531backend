@@ -27,6 +27,7 @@ app.use(
   })
 );
 
+//Add swagger middleware
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get("/", (req, res) => res.send({ hello: "world" }));
@@ -36,7 +37,7 @@ ProfileRoutes(app);
 FollowingRoutes(app);
 
 if (process.env.NODE_ENV !== "test") {
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 3010;
   app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`);
     console.log(`API Docs available at http://localhost:${port}/api-docs`);

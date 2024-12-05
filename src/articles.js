@@ -13,6 +13,83 @@ async function findAuthorIdByUsername(authorUsername) {
     return null;
   }
 }
+/**
+ * @swagger
+ * /articles:
+ *   post:
+ *     summary: Create a new article
+ *     tags:
+ *       - Articles
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               text:
+ *                 type: string
+ *                 description: The content of the article
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *                 description: Optional image file for the article
+ *     responses:
+ *       201:
+ *         description: Article created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 articles:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         description: The custom ID of the article
+ *                       author:
+ *                         type: string
+ *                         description: The author of the article
+ *                       text:
+ *                         type: string
+ *                         description: The content of the article
+ *                       image:
+ *                         type: string
+ *                         nullable: true
+ *                         description: The URL/path of the attached image
+ *                       date:
+ *                         type: string
+ *                         format: date-time
+ *                         description: The date when the article was created
+ *                       comments:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           description: List of comments on the article
+ *       400:
+ *         description: Bad request, text content is missing
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Text content is required for the article
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Internal server error
+ */
 
 async function createArticle(req, res) {
   const { text } = req.body;
